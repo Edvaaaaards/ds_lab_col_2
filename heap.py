@@ -28,19 +28,17 @@ class MaxHeap:
             left_index = self._left_child(index)
             right_index = self._right_child(index)
 
-            if (left_index < len(self.heap) and 
-                    self.heap[left_index] > self.heap[max_index]):
+            if (left_index < len(self.heap) and self.heap[left_index] > self.heap[max_index]):
                 max_index = left_index
 
-            if (right_index < len(self.heap) and 
-                    self.heap[right_index] > self.heap[max_index]):
+            if (right_index < len(self.heap) and self.heap[right_index] > self.heap[max_index]):
                 max_index = right_index
 
             if max_index != index:
                 self._swap(index, max_index)
                 index = max_index
             else:
-                return
+                break
                        
     def remove(self):
         if len(self.heap) == 0:
@@ -55,19 +53,17 @@ class MaxHeap:
 
         return max_value
 
-
 def find_kth_smallest(nums, k):
-    ###################################
-    ###                             ###
-    ###                             ###
-    ###                             ###
-    ###################################
+    max_heap = MaxHeap()
+    for num in nums:
+        max_heap.insert(num)
+        if len(max_heap.heap) > k:
+            max_heap.remove()
 
-
-
+    return max_heap.remove()
 
 # Test cases
-nums = [[3,2,1,5,6,4], [6,5,4,3,2,1], [1,2,3,4,5,6], [3,2,3,1,2,4,5,5,6]]
+nums = [[3, 2, 1, 5, 6, 4], [6, 5, 4, 3, 2, 1], [1, 2, 3, 4, 5, 6], [3, 2, 3, 1, 2, 4, 5, 5, 6]]
 ks = [2, 3, 4, 7]
 expected_outputs = [2, 3, 4, 5]
 
@@ -79,6 +75,7 @@ for i in range(len(nums)):
     print(f'Expected output: {expected_outputs[i]}')
     print(f'Test passed: {result == expected_outputs[i]}')
     print('---------------------------------------')
+
 
 
 """
